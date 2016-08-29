@@ -17,8 +17,18 @@ Or install it yourself as:
     $ gem install sugoi_activerecord_cache
 
 ## Usage
+```ruby
+class Category < ActiveRecord::Base
+  include SugoiActiveRecordCache
+end
 
-TODO: Write usage instructions here
+Category.create
+```
+
+* cache type
+  * key value
+  * 1recoed
+
 
 ## Development
 

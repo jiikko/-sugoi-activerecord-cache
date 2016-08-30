@@ -39,15 +39,15 @@ class SystemProperty < ActiveRecord::Base
     end
   end
 
-  sugoi_activerecord_cache(expire_in: 10.minutes) do |cache|
-    cache.set_key_value = SystemProperty.all_to_hash
-  end
+  sugoi_activerecord_cache self.all_to_hash, expire_in: 10.minutes
 end
 
-SystemProperty.create!(key: :synced_at, value: Time.now)
+SystemProperty.create!(key: :synced_on, value: '2011-01-01')
 SystemProperty.create!(key: :site_name, value: 'アンテナサイト')
-SystemProperty.find_from_cache(key: :synced_at)
-SystemProperty.find_from_cache(key: :synced_at)
+
+SystemProperty.find_from_cache(key: :synced_at) # => '2011-01-01'
+SystemProperty.find_from_cache(key: :site_name) # => 'アンテナサイト'
+SystemProperty.cached
 ```
 
 ### 1 recoed

@@ -17,18 +17,38 @@ Or install it yourself as:
     $ gem install sugoi_activerecord_cache
 
 ## Usage
-```ruby
-class Category < ActiveRecord::Base
-  include SugoiActiveRecordCache
-end
-
-Category.create
-```
-
 * cache type
   * key value
-  * 1recoed
+  * 1 recoed
 
+### key value
+```ruby
+class SystemProperty < ActiveRecord::Base
+  include SugoiActiveRecordCache::KeyValue
+
+  def self.all_to_hash
+    {}.tap do |h|
+      self.all.each { |recoed| h[record.key] = record.value }
+    end
+  end
+
+  sugoi_activerecord_cache(expire_in: nil) do |cache|
+    cache.set_key_value = SystemProperty.all_to_hash
+  end
+end
+
+SystemProperty.create!(key: :synced_at, value: Time.now)
+SystemProperty.create!(key: :site_name, value: 'アンテナサイト')
+SystemProperty.find_from_cache(key: :synced_at)
+SystemProperty.find_from_cache(key: :synced_at)
+```
+
+### 1 recoed
+```ruby
+class Category < ActiveRecord::Base
+  include SugoiActiveRecordCache::Record
+end
+```
 
 ## Development
 

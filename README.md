@@ -45,16 +45,24 @@ end
 SystemProperty.create!(key: :synced_on, value: '2011-01-01')
 SystemProperty.create!(key: :site_name, value: 'アンテナサイト')
 
-SystemProperty.find_from_cache(key: :synced_at) # => '2011-01-01'
-SystemProperty.find_from_cache(key: :site_name) # => 'アンテナサイト'
+SystemProperty.find_by_from_cache(key: :synced_at) # => '2011-01-01'
+SystemProperty.find_by_from_cache(key: :site_name) # => 'アンテナサイト'
 SystemProperty.cached
 ```
 
 ### 1 recoed
 ```ruby
-class Category < ActiveRecord::Base
+class ChildAge < ActiveRecord::Base
   include SugoiActiveRecordCache::Record
+
+  sugoi_activerecord_cache self.all.select(:id, :name, :description), expire_in: 10.minutes
 end
+
+ChildAge.create!(name: 9, description: 'ですです')
+ChildAge.create!(name: 8, description: 'ですです')
+
+SystemProperty.find_by_from_cache(name: 9)
+SystemProperty.find_by_from_cache(description: 9)
 ```
 
 ## Development

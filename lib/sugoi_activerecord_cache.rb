@@ -19,6 +19,7 @@ module SugoiActiverecordCache
     def sugoi_activerecord_cache(method_name, options)
       @method_name = method_name
       @expire_in = options[:expire_in]
+      @cache_key = options[:cache_key] || cache_key
     end
 
     def find_by_from_cache(key: )
@@ -30,11 +31,14 @@ module SugoiActiverecordCache
       return nil
     end
 
+    def cached
+      fetch
+    end
+
     private
 
-    # TODO multi prosessのテストをする
     def fetch
-      Rails.cache.fetch(cache_key, expire_in: @expire_in) do
+      Rails.cache.fetch(@cache_key, expire_in: @expire_in) do
         send(@method_name)
       end
     end

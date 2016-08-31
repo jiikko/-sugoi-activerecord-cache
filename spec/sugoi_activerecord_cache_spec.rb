@@ -23,4 +23,11 @@ describe SugoiActiverecordCache::KeyValue do
       expect(real).to be_nil
     end
   end
+
+  describe '#cached' do
+    it '' do
+      real = SystemProperty.cached
+      expect(real.keys.size).to eq 2
+    end
+  end
 end

@@ -11,6 +11,10 @@ module SugoiActiverecordCache
       @expire_in = options[:expire_in]
       @cache_key = options[:cache_key] || cache_key
     end
+
+    def cached
+      fetch
+    end
   end
 
   module KeyValue
@@ -31,15 +35,16 @@ module SugoiActiverecordCache
       return nil
     end
 
-    def cached
-      fetch
-    end
-
     private
 
     def fetch
       Rails.cache.fetch(@cache_key, expire_in: @expire_in) do
-        send(@method_name)
+        data = send(@method_name)
+        if data.is_a?(Array) || data.is_a?(Hash)
+          data
+        else
+          data.to_a
+        end
       end
     end
   end

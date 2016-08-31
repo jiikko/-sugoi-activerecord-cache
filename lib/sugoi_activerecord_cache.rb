@@ -5,6 +5,12 @@ module SugoiActiverecordCache
     def cache_key
       self.table_name
     end
+
+    def sugoi_activerecord_cache(method_name, options)
+      @method_name = method_name
+      @expire_in = options[:expire_in]
+      @cache_key = options[:cache_key] || cache_key
+    end
   end
 
   module KeyValue
@@ -14,12 +20,6 @@ module SugoiActiverecordCache
       {}.tap do |h|
         all.each { |record| h[record.key] = record.value }
       end
-    end
-
-    def sugoi_activerecord_cache(method_name, options)
-      @method_name = method_name
-      @expire_in = options[:expire_in]
-      @cache_key = options[:cache_key] || cache_key
     end
 
     def find_by_from_cache(key: )
@@ -46,5 +46,8 @@ module SugoiActiverecordCache
 
   module Record
     include Base
+
+    def find_by_from_cache(key: )
+    end
   end
 end

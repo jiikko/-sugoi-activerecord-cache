@@ -13,3 +13,4 @@ ActiveRecord::Migrator.migrate(File.expand_path('../migrations', __FILE__))
 require 'sugoi_activerecord_cache'
 require 'support/models/rails_mock'
 require 'support/models/system_property'
+require 'support/models/child_age'

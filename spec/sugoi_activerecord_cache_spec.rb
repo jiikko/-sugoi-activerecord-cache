@@ -6,7 +6,6 @@ describe SugoiActiverecordCache do
   end
 end
 
-
 describe SugoiActiverecordCache::KeyValue do
   before(:all) do
     SystemProperty.create!(key: :synced_on, value: '2011-01-01')
@@ -30,4 +29,19 @@ describe SugoiActiverecordCache::KeyValue do
       expect(real.keys.size).to eq 2
     end
   end
+end
+
+describe SugoiActiverecordCache::Record do
+  before(:all) do
+    ChildAge.create!(name: 9, description: 'ですです')
+    ChildAge.create!(name: 8, description: 'ですです')
+  end
+
+  describe '#find_by_from_cache' do
+    it '値を返すこと' do
+      real = ChildAge.find_by_from_cache(key: :synced_on)
+      binding.pry
+    end
+  end
+ChildAge
 end

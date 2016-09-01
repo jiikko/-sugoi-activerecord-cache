@@ -26,6 +26,7 @@ describe SugoiActiverecordCache::KeyValue do
   describe '#cached' do
     it 'Hashを返すこと' do
       real = SystemProperty.cached
+      expect(real).to be_a Hash
       expect(real.keys.size).to eq 2
     end
   end
@@ -41,6 +42,16 @@ describe SugoiActiverecordCache::Record do
     it '値を返すこと' do
       real = ChildAge.find_by_from_cache(name: 9)
       expect(real).to_not be_nil
+      real = ChildAge.find_by_from_cache(description: 'ですです')
+      expect(real).to_not be_nil
+    end
+  end
+
+  describe '#cached' do
+    it 'Arrayを返すこと' do
+      real = ChildAge.cached
+      expect(real).to be_a Array
+      expect(real.size).to eq 2
     end
   end
 end

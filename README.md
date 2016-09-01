@@ -61,8 +61,8 @@ end
 ChildAge.create!(name: 9, description: 'ですです')
 ChildAge.create!(name: 8, description: 'ですです')
 
-SystemProperty.find_by_from_cache(name: 9)
-SystemProperty.find_by_from_cache(description: 9)
+ChildAge.find_by_from_cache(name: 9)
+ChildAge.find_by_from_cache(description: 'ですです')
 ```
 
 ## Development

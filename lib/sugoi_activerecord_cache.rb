@@ -53,7 +53,7 @@ module SugoiActiverecordCache
     include Base
 
     def find_by_from_cache(params)
-      raise('dose\'t support multi keys') if params.keys.size != 1
+      raise('don\'t support multi keys arg') if params.keys.size != 1
       key = params.keys.first
       value = params.values.first
       fetch.each do |cached_record|

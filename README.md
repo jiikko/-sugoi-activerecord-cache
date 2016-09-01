@@ -26,14 +26,14 @@ Or install it yourself as:
 ## Usage
 * cache type
   * key value
-  * 1 recoed
+  * list of activerecord instance
 
 ### key value
 ```ruby
 class SystemProperty < ActiveRecord::Base
   include SugoiActiveRecordCache::KeyValue
 
-  sugoi_activerecord_cache self.all_to_hash, expire_in: 10.minutes
+  sugoi_activerecord_cache :all_to_hash, expire_in: 10.minutes
 end
 
 SystemProperty.create!(key: :synced_on, value: '2011-01-01')
@@ -44,7 +44,7 @@ SystemProperty.find_by_from_cache(key: :site_name) # => 'アンテナサイト'
 SystemProperty.cached
 ```
 
-### 1 recoed
+### list of activerecord instance
 ```ruby
 class ChildAge < ActiveRecord::Base
   include SugoiActiveRecordCache::Record

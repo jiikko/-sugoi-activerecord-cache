@@ -33,12 +33,6 @@ Or install it yourself as:
 class SystemProperty < ActiveRecord::Base
   include SugoiActiveRecordCache::KeyValue
 
-  def self.all_to_hash
-    {}.tap do |h|
-      self.all.each { |recoed| h[record.key] = record.value }
-    end
-  end
-
   sugoi_activerecord_cache self.all_to_hash, expire_in: 10.minutes
 end
 
@@ -55,14 +49,19 @@ SystemProperty.cached
 class ChildAge < ActiveRecord::Base
   include SugoiActiveRecordCache::Record
 
-  sugoi_activerecord_cache self.all.select(:id, :name, :description), expire_in: 10.minutes
+  sugoi_activerecord_cache :for_cache, expire_in: 10.minutes
+
+  def self.for_cache
+    all.select(:id, :name, :description)
+  end
 end
 
-ChildAge.create!(name: 9, description: 'ですです')
+ChildAge.create!(name: 9, description: 'ますます')
 ChildAge.create!(name: 8, description: 'ですです')
 
 ChildAge.find_by_from_cache(name: 9)
 ChildAge.find_by_from_cache(description: 'ですです')
+ChildAge.cached
 ```
 
 ## Development

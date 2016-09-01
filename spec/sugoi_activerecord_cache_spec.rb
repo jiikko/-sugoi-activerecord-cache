@@ -33,13 +33,13 @@ end
 
 describe SugoiActiverecordCache::Record do
   before(:all) do
-    ChildAge.create!(name: 9, description: 'ですです')
+    ChildAge.create!(name: 9, description: 'ますます')
     ChildAge.create!(name: 8, description: 'ですです')
   end
 
   describe '#find_by_from_cache' do
     it '値を返すこと' do
-      real = ChildAge.find_by_from_cache(key: :synced_on)
+      real = ChildAge.find_by_from_cache(name: 9)
       expect(real).to_not be_nil
     end
   end

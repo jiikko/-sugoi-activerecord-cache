@@ -26,29 +26,6 @@ module SugoiActiverecordCache
     end
   end
 
-  module KeyValue
-    include Base
-
-    def to_hash(list)
-      {}.tap do |h|
-        list.each { |record| h[record.key] = record.value }
-      end
-    end
-
-    def find_by_from_cache(key: )
-      to_hash(fetch).each do |cached_key, cached_value|
-        if cached_key == key.to_s
-          return cached_value
-        end
-      end
-      return nil
-    end
-
-    def cached
-      to_hash(fetch)
-    end
-  end
-
   module Record
     include Base
 

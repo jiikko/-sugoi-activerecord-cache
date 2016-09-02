@@ -33,7 +33,7 @@ Or install it yourself as:
 class SystemProperty < ActiveRecord::Base
   include SugoiActiveRecordCache::KeyValue
 
-  sugoi_activerecord_cache :all_to_hash, expire_in: 10.minutes
+  sugoi_activerecord_cache :all, expire_in: 10.minutes
 end
 
 SystemProperty.create!(key: :synced_on, value: '2011-01-01')

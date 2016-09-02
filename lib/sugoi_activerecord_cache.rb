@@ -12,16 +12,12 @@ module SugoiActiverecordCache
       @cache_key = options[:cache_key] || cache_key
     end
 
-    def cached
-      fetch
-    end
-
     private
 
     def fetch
       Rails.cache.fetch(@cache_key, expire_in: @expire_in) do
         data = send(@method_name)
-        if data.is_a?(Array) || data.is_a?(Hash)
+        if data.is_a?(Array)
           data
         else
           data.to_a
@@ -33,19 +29,23 @@ module SugoiActiverecordCache
   module KeyValue
     include Base
 
-    def all_to_hash
+    def to_hash(list)
       {}.tap do |h|
-        all.each { |record| h[record.key] = record.value }
+        list.each { |record| h[record.key] = record.value }
       end
     end
 
     def find_by_from_cache(key: )
-      fetch.each do |cached_key, cached_value|
+      to_hash(fetch).each do |cached_key, cached_value|
         if cached_key == key.to_s
           return cached_value
         end
       end
       return nil
+    end
+
+    def cached
+      to_hash(fetch)
     end
   end
 
@@ -62,6 +62,10 @@ module SugoiActiverecordCache
         end
       end
       return nil
+    end
+
+    def cached
+      fetch
     end
   end
 end

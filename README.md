@@ -20,7 +20,7 @@ Or install it yourself as:
 class SystemProperty < ActiveRecord::Base
   include SugoiActiveRecordCache::Record
 
-  sugoi_activerecord_cache :all, expire_in: 10.minutes
+  sugoi_activerecord_cache :for_cache, expire_in: 10.minutes
 
   def self.for_cache
     all.select(:key, :value)

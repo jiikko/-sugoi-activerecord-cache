@@ -1,12 +1,4 @@
 # SugoiActiverecordCache
-* memcachdにレコードのcacheを入れておき、モデルコールバックでcacheのclearをすると古いキャッシュが残り続ける可能性がある
-  * マルチAZ環境でmemcachedがzone毎に存在する場合、callbackでcacheをclearしていたらclearするのはリクエストを受けたzoneのmemcachedだけになり、古いキャッシュが残り続けてしまう
-    * モデルコールバックでのcacheのclearは難しい
-* モデル内からでもキャッシュから呼びたい
-  * フラグメントキャッシュでは粒度が大きすぎる
-
-のでモデルで期限付きのキャッシュを返します
-
 ## Installation
 
 Add this line to your application's Gemfile:
